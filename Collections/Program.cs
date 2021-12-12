@@ -6,7 +6,7 @@ namespace Collections
     class Program
     {
         static void Main(string[] args)
-        {
+        {                        
             int[] nums1 = new int[5];
 
             nums1[0] = 1;

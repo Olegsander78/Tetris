@@ -4,10 +4,8 @@ using System.Text;
 
 namespace Tetris
 {
-    class Square
-    {
-        Point[] points = new Point[4];
-
+    class Square : Figure
+    {        
         public Square(int x, int y, char sym)
         {
             points[0] = new Point(x, y, sym);
@@ -15,14 +13,5 @@ namespace Tetris
             points[2] = new Point(x, y + 1, sym);
             points[3] = new Point(x + 1, y + 1, sym);
         }
-
-        public void Draw()
-        {
-            foreach (var item in points)
-            {
-                item.Draw();
-            }
-        }
-
     }
 }
