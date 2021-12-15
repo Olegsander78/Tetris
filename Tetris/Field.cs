@@ -15,12 +15,6 @@ namespace Tetris
             {
                 return _width;
             }
-            set
-            {
-                _width = value;
-                Console.SetWindowSize(_width, Field.Height);
-                Console.SetBufferSize(_width, Field.Height);
-            }
         }
 
         public static int Height
@@ -28,13 +22,7 @@ namespace Tetris
             get
             {
                 return _heght;
-            }
-            set
-            {
-                _heght = value;
-                Console.SetWindowSize(value, Field.Height);
-                Console.SetBufferSize(value, Field.Height);
-            }
+            }            
         }
 
         private static bool[][] _heap;
@@ -87,11 +75,11 @@ namespace Tetris
                 {
                     if (_heap[j][i])
                     {
-                        Drawer.DrawPoint(i, j);
+                        DrawerProvider.Drawer.DrawPoint(i, j);
                     }
                     else
                     {
-                        Drawer.HidePoint(i, j);
+                        DrawerProvider.Drawer.HidePoint(i, j);
                     }
                 }
             }

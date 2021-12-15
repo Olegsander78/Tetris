@@ -14,10 +14,9 @@ namespace Tetris
         static FigureGenerator generator;
         static void Main(string[] args)
         {
-            Console.SetWindowSize(Field.Width, Field.Height);
-            Console.SetBufferSize(Field.Width, Field.Height);
+            DrawerProvider.Drawer.InitField();
 
-            generator = new FigureGenerator(Field.Width/2, 0, Drawer.DEFAULT_SYMBOL);
+            generator = new FigureGenerator(Field.Width/2, 0);
             currentFigure = generator.GetNewFigure();
             SetTimer();
 
@@ -33,15 +32,26 @@ namespace Tetris
                 }
             }
         }
-        
+
         private static bool ProcessResult(Result result, ref Figure currentFigure)
         {
             if(result == Result.HEAP_STRIKE || result == Result.DOWN_BORDER_STRIKE)
             {
                 Field.AddFigure(currentFigure);
                 Field.TryDeleteLines();
-                currentFigure =  generator.GetNewFigure();
-                return true;
+
+                if (currentFigure.IsOnTop())
+                {
+                    DrawerProvider.Drawer.WriteGameOver();
+                    timer.Elapsed -= OnTimedEvent;
+                    return true;
+                }
+                else
+                {
+                    currentFigure = generator.GetNewFigure();
+                    return false;
+                }
+                
             }
             else
             {
@@ -71,7 +81,7 @@ namespace Tetris
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
             timer.Enabled = true;
-        }
+        }      
 
         private static void OnTimedEvent(Object sender , ElapsedEventArgs e)
         {
